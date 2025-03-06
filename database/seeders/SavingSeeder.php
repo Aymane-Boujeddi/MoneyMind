@@ -4,9 +4,9 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Category;
+use App\Models\Saving;
 
-class CategorySeeder extends Seeder
+class SavingSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,6 +14,6 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         //
-        Category::factory()->count(1)->create();
+        Saving::factory(10)->create();
     }
 }

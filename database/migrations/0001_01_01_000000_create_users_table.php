@@ -18,6 +18,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->float('salary')->nullable();
+            $table->decimal('total_savings',10,2)->default(0);
             $table->decimal('budget',10,2);
             $table->integer('credit_date')->nullable();
             $table->enum('role',['admin','client'])->default('client');

@@ -12,7 +12,6 @@
 </head>
 
 <body class="bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50">
-    <!-- Success Message -->
     @if (session('success'))
         <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 3000)"
             class="fixed top-4 right-4 z-50 flex items-center p-4 mb-4 rounded-lg shadow-lg bg-green-50 border-l-4 border-green-500 animate__animated animate__fadeInRight">
@@ -31,7 +30,6 @@
         </div>
     @endif
 
-    <!-- Error Message -->
     @if (session('error'))
         <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 3000)"
             class="fixed top-4 right-4 z-50 flex items-center p-4 mb-4 rounded-lg shadow-lg bg-red-50 border-l-4 border-red-500 animate__animated animate__fadeInRight">
@@ -59,10 +57,8 @@
             this.modalOpen = false;
         }
     }" class="min-h-screen relative">
-        <!-- Enhanced Sidebar with Glassmorphism -->
         <x-aside-nav />
 
-        <!-- Enhanced Header Section with Gradient -->
         <div class="bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 shadow-lg">
             <div class="md:ml-64 p-4 md:p-8">
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center">
@@ -80,7 +76,6 @@
                     </div>
                 </div>
                 <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6 mt-6">
-                    <!-- One-time Expense Button -->
                     <button @click="modalOpen = true; expenseType = 'ponctuel'"
                         class="flex-1 bg-white/10 backdrop-blur-xl hover:bg-white/20 text-white p-6 rounded-xl border border-white/20 shadow-lg hover:shadow-xl transition-all duration-300 group">
                         <div class="flex items-center justify-between mb-4">
@@ -97,7 +92,6 @@
                         </div>
                     </button>
 
-                    <!-- Recurring Expense Button -->
                     <button @click="modalOpen = true; expenseType = 'recurring'"
                         class="flex-1 bg-white/10 backdrop-blur-xl hover:bg-white/20 text-white p-6 rounded-xl border border-white/20 shadow-lg hover:shadow-xl transition-all duration-300 group">
                         <div class="flex items-center justify-between mb-4">
@@ -114,7 +108,6 @@
                         </div>
                     </button>
                 </div>
-                <!-- Enhanced Navigation Tabs -->
                 <div class="flex space-x-6 mt-8 border-b border-blue-500">
                     <button @click="activeTab = 'overview'"
                         :class="{ 'text-white border-b-2 border-white': activeTab === 'overview' }"
@@ -138,11 +131,8 @@
             </div>
         </div>
 
-        <!-- Main Content Area with Enhanced Cards -->
         <div class="md:ml-64 p-4 md:p-8 pt-0">
-            <!-- Overview Tab Content -->
             <div x-show="activeTab === 'overview'" class="animate__animated animate__fadeIn">
-                <!-- Enhanced Summary Cards with 3D Effect -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                     <div
                         class="bg-gradient-to-br from-red-500 to-pink-500 rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
@@ -159,7 +149,6 @@
 
                         </div>
                     </div>
-                    <!-- Monthly Total Card -->
                     <div
                         class="bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
                         <div class="flex items-center justify-between mb-4">
@@ -170,49 +159,48 @@
                         </div>
                         <h3 class="text-white/90 text-sm mb-2">Total Recurring</h3>
                         <div class="flex items-baseline space-x-2">
-                            <span class="text-2xl font-bold text-white">2,850</span>
+                            <span class="text-2xl font-bold text-white">{{ $recurenteSum }} </span>
                             <span class="text-white/80">DH</span>
                         </div>
-                        <p class="text-sm text-white/90 mt-2">8 active subscriptions</p>
+                        {{-- <p class="text-sm text-white/90 mt-2">8 active subscriptions</p> --}}
                     </div>
 
-                    <!-- Next Payment Card -->
                     <div
                         class="bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
                         <div class="flex items-center justify-between mb-4">
                             <div class="bg-white/20 p-3 rounded-lg">
-                                <i class="fas fa-calendar text-white text-xl"></i>
-                            </div>
-                            <span class="text-sm text-white/80">Next Due</span>
-                        </div>
-                        <h3 class="text-white/90 text-sm mb-2">Next Payment</h3>
-                        <div class="flex items-baseline space-x-2">
-                            <span class="text-2xl font-bold text-white">Rent</span>
-                        </div>
-                        <p class="text-sm text-white/90 mt-2">Due in 5 days</p>
-                    </div>
-
-                    <div
-                        class="bg-gradient-to-br from-emerald-500 to-teal-500 rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-                        <!-- Similar structure with different colors -->
-                        <div class="flex items-center justify-between mb-4">
-                            <div class="bg-white/20 p-3 rounded-lg">
                                 <i class="fas fa-wallet text-white text-xl"></i>
                             </div>
-                            <span class="text-sm text-white/80">vs last month</span>
+                            <span class="text-sm text-white/80">Current</span>
                         </div>
-                        <h3 class="text-white/90 text-sm mb-2">Total Expenses</h3>
+                        <h3 class="text-white/90 text-sm mb-2">Total Budget</h3>
                         <div class="flex items-baseline space-x-2">
-                            <span class="text-2xl font-bold text-white">{{ $totalExpense }}</span>
+                            <span class="text-2xl font-bold text-white">{{ $budget }} </span>
                             <span class="text-white/80">DH</span>
 
                         </div>
+                        {{-- <p class="text-sm text-white/90 mt-2">Due in 5 days</p> --}}
+                    </div>
+
+                    <div
+                        class="bg-gradient-to-br from-blue-500 to-gray-600 rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="bg-white/20 p-3 rounded-lg">
+                                <i class="fas fa-receipt text-2xl"></i>
+                            </div>
+                            <span class="text-sm text-white/80">This Month</span>
+                        </div>
+                        <h3 class="text-white/90 text-sm mb-2">Total Ponctuel</h3>
+                        <div class="flex items-baseline space-x-2">
+                            <span class="text-2xl font-bold text-white">{{ $ponctuelSum }} </span>
+                            <span class="text-white/80">DH</span>
+                        </div>
+                        {{-- <p class="text-sm text-white/90 mt-2">8 active subscriptions</p> --}}
                     </div>
                 </div>
 
-                <!-- Enhanced Category Breakdown with Interactive Elements -->
 
-                <div class="grid grid-cols-1 gap-6 mb-8">
+                {{-- <div class="grid grid-cols-1 gap-6 mb-8">
                     <div class="bg-white/90 backdrop-blur-xl rounded-xl shadow-lg p-6 border border-white/20">
                         <div class="flex justify-between items-center mb-6">
                             <h3 class="text-lg font-semibold text-gray-900">Expense Categories</h3>
@@ -267,82 +255,81 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                 <!-- Active Subscriptions -->
-            <div class="bg-white/90 backdrop-blur-xl rounded-xl shadow-lg border border-white/20 overflow-hidden mb-8">
-                <div class="p-6 border-b border-gray-100">
-                    <h3 class="text-lg font-semibold text-gray-900">Active Subscriptions</h3>
-                </div>
-                <div class="divide-y divide-gray-100">
-                    <!-- Rent Payment Item -->
-                    <div class="p-6 hover:bg-gray-50/50 transition-all duration-200">
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center space-x-4">
-                                <div class="bg-gradient-to-br from-blue-100 to-blue-200 p-3 rounded-xl">
-                                    <i class="fas fa-home text-blue-600"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-semibold text-gray-900">Rent Payment</h4>
-                                    <p class="text-sm text-gray-600">Monthly on the 1st</p>
-                                </div>
-                            </div>
-                            <div class="text-right">
-                                <p class="font-semibold text-gray-900">1,500 DH</p>
-                                <p class="text-sm text-gray-600">Next: Apr 1, 2024</p>
-                            </div>
-                        </div>
-                        <div class="mt-4 flex items-center justify-between">
-                            <span class="text-sm text-green-600 bg-green-50 px-3 py-1 rounded-full">
-                                <i class="fas fa-check-circle mr-1"></i>
-                                Active
-                            </span>
-                            <div class="flex space-x-3">
-                                <button class="text-gray-400 hover:text-blue-600 transition-colors">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button class="text-gray-400 hover:text-red-600 transition-colors">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </div>
-                        </div>
+                </div> --}}
+                <div
+                    class="bg-white/90 backdrop-blur-xl rounded-xl shadow-lg border border-white/20 overflow-hidden mb-8">
+                    <div class="p-6 border-b border-gray-100">
+                        <h3 class="text-lg font-semibold text-gray-900">Active Subscriptions</h3>
                     </div>
+                    <div class="divide-y divide-gray-100">
+                        <!-- Rent Payment Item -->
+                        <div class="p-6 hover:bg-gray-50/50 transition-all duration-200">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-4">
+                                    <div class="bg-gradient-to-br from-blue-100 to-blue-200 p-3 rounded-xl">
+                                        <i class="fas fa-home text-blue-600"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-gray-900">Rent Payment</h4>
+                                        <p class="text-sm text-gray-600">Monthly on the 1st</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="font-semibold text-gray-900">1,500 DH</p>
+                                    <p class="text-sm text-gray-600">Next: Apr 1, 2024</p>
+                                </div>
+                            </div>
+                            <div class="mt-4 flex items-center justify-between">
+                                <span class="text-sm text-green-600 bg-green-50 px-3 py-1 rounded-full">
+                                    <i class="fas fa-check-circle mr-1"></i>
+                                    Active
+                                </span>
+                                <div class="flex space-x-3">
+                                    <button class="text-gray-400 hover:text-blue-600 transition-colors">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="text-gray-400 hover:text-red-600 transition-colors">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
 
-                    <!-- Netflix Subscription -->
-                    <div class="p-6 hover:bg-gray-50/50 transition-all duration-200">
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center space-x-4">
-                                <div class="bg-gradient-to-br from-red-100 to-red-200 p-3 rounded-xl">
-                                    <i class="fas fa-tv text-red-600"></i>
+                        <!-- Netflix Subscription -->
+                        <div class="p-6 hover:bg-gray-50/50 transition-all duration-200">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-4">
+                                    <div class="bg-gradient-to-br from-red-100 to-red-200 p-3 rounded-xl">
+                                        <i class="fas fa-tv text-red-600"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-gray-900">Netflix</h4>
+                                        <p class="text-sm text-gray-600">Monthly on the 15th</p>
+                                    </div>
                                 </div>
-                                <div>
-                                    <h4 class="font-semibold text-gray-900">Netflix</h4>
-                                    <p class="text-sm text-gray-600">Monthly on the 15th</p>
+                                <div class="text-right">
+                                    <p class="font-semibold text-gray-900">95 DH</p>
+                                    <p class="text-sm text-gray-600">Next: Mar 15, 2024</p>
                                 </div>
                             </div>
-                            <div class="text-right">
-                                <p class="font-semibold text-gray-900">95 DH</p>
-                                <p class="text-sm text-gray-600">Next: Mar 15, 2024</p>
-                            </div>
-                        </div>
-                        <div class="mt-4 flex items-center justify-between">
-                            <span class="text-sm text-green-600 bg-green-50 px-3 py-1 rounded-full">
-                                <i class="fas fa-check-circle mr-1"></i>
-                                Active
-                            </span>
-                            <div class="flex space-x-3">
-                                <button class="text-gray-400 hover:text-blue-600 transition-colors">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button class="text-gray-400 hover:text-red-600 transition-colors">
-                                    <i class="fas fa-trash"></i>
-                                </button>
+                            <div class="mt-4 flex items-center justify-between">
+                                <span class="text-sm text-green-600 bg-green-50 px-3 py-1 rounded-full">
+                                    <i class="fas fa-check-circle mr-1"></i>
+                                    Active
+                                </span>
+                                <div class="flex space-x-3">
+                                    <button class="text-gray-400 hover:text-blue-600 transition-colors">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="text-gray-400 hover:text-red-600 transition-colors">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- Enhanced Payment Calendar -->
-            <div class="bg-white/90 backdrop-blur-xl rounded-xl shadow-lg border border-white/20 p-6">
+                {{-- <div class="bg-white/90 backdrop-blur-xl rounded-xl shadow-lg border border-white/20 p-6">
                 <h3 class="text-lg font-semibold text-gray-900 mb-6">Upcoming Payments</h3>
                 <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
                     <div class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl border border-gray-200 p-4 hover:shadow-md transition-all duration-200">
@@ -367,39 +354,24 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
-                <!-- New Feature: Expense Insights -->
                 <div class="grid grid-cols-1  gap-6 mb-8 py-6">
                     <div class="bg-white/90 backdrop-blur-xl rounded-xl shadow-lg p-6 border border-white/20">
-                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Spending Insights</h3>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Spending Insights (AI generated)</h3>
                         <div class="space-y-4">
                             <div class="flex items-center p-3 bg-yellow-50 rounded-lg border border-yellow-100">
                                 <i class="fas fa-lightbulb text-yellow-500 mr-3"></i>
-                                <p class="text-sm text-gray-600">Your restaurant spending is 25% higher than usual this
-                                    month.</p>
-                            </div>
-                            <div class="flex items-center p-3 bg-green-50 rounded-lg border border-green-100">
-                                <i class="fas fa-piggy-bank text-green-500 mr-3"></i>
-                                <p class="text-sm text-gray-600">You've saved 15% on utilities compared to last month!
-                                </p>
+                                <p class="text-sm text-gray-600">{{$advice}}</p>
                             </div>
                         </div>
                     </div>
-
-                    {{-- <div class="bg-white/90 backdrop-blur-xl rounded-xl shadow-lg p-6 border border-white/20">
-                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Budget Status</h3>
-                        <!-- Add budget progress visualization -->
-                    </div> --}}
                 </div>
             </div>
 
-            <!-- Transactions Tab Content -->
             <div x-show="activeTab === 'recurrent'" class="animate__animated animate__fadeIn" style="display: none;">
-                <!-- Enhanced transactions table -->
-                <!-- Recurring Expenses Grid -->
+
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Netflix Subscription Card -->
                     @foreach ($depensesRecurente as $depense)
                         <div
                             class="bg-white/90 backdrop-blur-xl rounded-xl shadow-lg border border-white/20 hover:shadow-xl transition-all duration-300">
@@ -415,9 +387,13 @@
                                         <button class="text-gray-400 hover:text-blue-600 transition-colors">
                                             <i class="fas fa-edit"></i>
                                         </button>
-                                        <button class="text-gray-400 hover:text-red-600 transition-colors">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </button>
+                                        <form action="{{ url('/expenses/recurente/' . $depense->id)}}" method="post">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button  class="text-gray-400 hover:text-red-600 transition-colors">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </form>
                                     </div>
                                 </div>
                                 <div class="flex justify-between items-baseline mb-3">
@@ -500,13 +476,9 @@
                 </div>
             </div>
 
-            <!-- Analytics Tab Content -->
             <div x-show="activeTab === 'punctuel'" class="animate__animated animate__fadeIn" style="display: none;">
-                <!-- Enhanced analytics content -->
-                <!-- One-time expenses and purchases that occur irregularly or as needed. These transactions represent individual spending events rather than recurring payments. -->
-                <!-- Punctual Expenses Grid -->
+
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Shopping Expense Card -->
                     @foreach ($depensesPunctuel as $depense)
                         <div
                             class="bg-white/90 backdrop-blur-xl rounded-xl shadow-lg border border-white/20 hover:shadow-xl transition-all duration-300">
@@ -523,9 +495,13 @@
                                         <button class="text-gray-400 hover:text-blue-600 transition-colors">
                                             <i class="fas fa-edit"></i>
                                         </button>
-                                        <button class="text-gray-400 hover:text-red-600 transition-colors">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </button>
+                                        <form action="{{ url('/expenses/ponctuel/' . $depense->id)}}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button  class="text-gray-400 hover:text-red-600 transition-colors">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </form>
                                     </div>
                                 </div>
                                 <div class="flex justify-between items-baseline mb-3">
@@ -540,8 +516,7 @@
                         </div>
                     @endforeach
 
-                    {{-- <!-- Restaurant Expense Card -->
-                    <div class="bg-white/90 backdrop-blur-xl rounded-xl shadow-lg border border-white/20 hover:shadow-xl transition-all duration-300">
+                    {{-- <div class="bg-white/90 backdrop-blur-xl rounded-xl shadow-lg border border-white/20 hover:shadow-xl transition-all duration-300">
                         <div class="p-6">
                             <div class="flex justify-between items-start mb-4">
                                 <div class="flex items-center">
@@ -573,7 +548,6 @@
                         </div>
                     </div>
 
-                    <!-- Electronics Expense Card -->
                     <div class="bg-white/90 backdrop-blur-xl rounded-xl shadow-lg border border-white/20 hover:shadow-xl transition-all duration-300">
                         <div class="p-6">
                             <div class="flex justify-between items-start mb-4">
@@ -609,20 +583,16 @@
             </div>
         </div>
 
-        <!-- Modal -->
         <template x-if="modalOpen">
             <div class="fixed inset-0 z-50 overflow-y-auto" x-transition:enter="transition ease-out duration-300"
                 x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
                 x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100"
                 x-transition:leave-end="opacity-0">
                 <div class="flex items-center justify-center min-h-screen px-4">
-                    <!-- Backdrop -->
                     <div class="fixed inset-0 bg-black/30 backdrop-blur-sm" @click="closeModal"></div>
 
-                    <!-- Modal Content -->
                     <div
                         class="relative bg-white/90 backdrop-blur-xl rounded-xl max-w-md w-full p-6 shadow-xl border border-white/20">
-                        <!-- Modal Header -->
                         <div class="flex justify-between items-center mb-6">
                             <h3 class="text-xl font-semibold text-gray-900"
                                 x-text="expenseType === 'ponctuel' ? 'Add One-time Expense' : 'Add Recurring Expense'">
@@ -632,10 +602,8 @@
                             </button>
                         </div>
 
-                        <!-- Forms -->
                         <div x-show="expenseType === 'ponctuel'">
                             <form action="{{ route('ponctuel') }}" method="POST" class="space-y-6">
-                                <!-- Amount Input -->
                                 @csrf
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-2">Amount (DH)</label>
@@ -648,7 +616,6 @@
                                     </div>
                                 </div>
 
-                                <!-- Category Selection -->
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-2">Category</label>
                                     <select name="category"
@@ -668,7 +635,6 @@
                                         placeholder="Enter expense title">
                                 </div>
 
-                                <!-- Date -->
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-2">Date (Date when you
                                         made the expense)</label>
@@ -676,7 +642,6 @@
                                         class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:border-transparent">
                                 </div>
 
-                                <!-- Submit Button -->
                                 <button type="submit"
                                     class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-2 px-4 rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-all duration-200 flex items-center justify-center space-x-2">
                                     <i class="fas fa-plus"></i>
@@ -687,7 +652,6 @@
 
                         <div x-show="expenseType === 'recurring'">
                             <form action="{{ route('recurente') }}" method="POST" class="space-y-6">
-                                <!-- Amount Input -->
                                 @csrf
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-2">Amount (DH)</label>
@@ -700,7 +664,6 @@
                                     </div>
                                 </div>
 
-                                <!-- Category Selection -->
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-2">Category</label>
                                     <select name="category"
@@ -713,7 +676,6 @@
                                     </select>
                                 </div>
 
-                                <!-- Description -->
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-2">Title</label>
                                     <input type="text" name="title"
@@ -721,10 +683,8 @@
                                         placeholder="Enter expense title" required>
                                 </div>
 
-                                <!-- Frequency -->
 
 
-                                <!-- Start Date -->
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-2">Start Date (Date when
                                         your started your monthly expense)</label>
@@ -735,7 +695,6 @@
 
 
 
-                                <!-- Submit Button -->
                                 <button type="submit"
                                     class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-2 px-4 rounded-lg hover:from-purple-700 hover:to-indigo-700 transition-all duration-200 flex items-center justify-center space-x-2">
                                     <i class="fas fa-plus"></i>
@@ -749,9 +708,7 @@
         </template>
     </div>
 
-    <script>
-        // Add any additional JavaScript if needed
-    </script>
+    <script></script>
 </body>
 
 </html>

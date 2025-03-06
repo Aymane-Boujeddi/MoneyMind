@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('wishlists', function (Blueprint $table) {
+        Schema::create('alerts', function (Blueprint $table) {
             $table->id();
-            $table->string('wishlist_name');
-            $table->decimal('wishlist_amount',10,2);
-            $table->decimal('wishlist_progress',10,2);
-            $table->date('target_date')->nullable();
-            $table->timestamps();
+            $table->decimal('seuil',5,2);
+            $table->enum('type',['global','category']);
+            $table->decimal('progress',5,2)->default('0.00');
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignID('category_id')->nullable()->references('id')->on('categories')->onDelete('cascade')->onUpdate('cascade');
+            $table->timestamps();
         });
     }
 
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('wishlists');
+        Schema::dropIfExists('alerts');
     }
 };

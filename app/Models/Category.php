@@ -17,4 +17,7 @@ class Category extends Model
     public function depense(){
         return $this->hasMany(Depense::class);
     }
+    public function alert(){
+        return $this->belongsTo(Alert::class);
+    }
 }

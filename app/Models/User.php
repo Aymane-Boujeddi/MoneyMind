@@ -8,6 +8,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Depense;
 use App\Models\Wishlist;
+use App\Models\Alert;
+use App\Models\Saving;
+use App\Models\Category;
+use Carbon\Carbon;
 
 class User extends Authenticatable
 {
@@ -52,21 +56,70 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-    public function newSalary($amount){
+
+    public function depense()
+    {
+        return $this->hasMany(Depense::class);
+    }
+    public function wishlist()
+    {
+        return $this->hasMany(Wishlist::class);
+    }
+    public function alert()
+    {
+        return $this->hasMany(Alert::class);
+    }
+    public function savings()
+    {
+        return $this->hasMany(Saving::class);
+    }
+    // public function budgetPlusExpenseRecurrente($amount, $date)
+    // {
+    //     $day = $date->day;
+    //     if (Carbon::today()->day < $day) {
+    //         $this->budget += $amount;
+    //         $this->save();
+    //     }
+    // }
+    // public function budgetAfterRecurent($amount,$date){
+    //     $day = $date->day;
+    //     $now = Carbon::today()->day;
+    //     // dd($day . $now);
+    //     if (Carbon::today()->day > $day) {
+            
+    //         $this->budget -= $amount;
+    //         $this->save();
+    //     }
+    // }
+    public function budgetMinusExpense($amount)
+    {
         $this->budget -= $amount;
         $this->save();
     }
-    public function isAdmin(){
+    public function budgetPlusExpense($amount)
+    {
+        $this->budget += $amount;
+        $this->save();
+    }
+    public function getSalary()
+    {
+        return $this->salary;
+    }
+    public function getCreditDate()
+    {
+        return $this->credit_date;
+    }
+    public function getBudget()
+    {
+        return $this->budget;
+    }
+    public function isAdmin()
+    {
         return $this->role === 'admin';
     }
-    public function isClient(){
+    public function isClient()
+    {
         return $this->role === 'client';
     }
-    public function depense(){
-        return $this->hasMany(Depense::class);
-    }
-    public function wishlist(){
-        return $this->hasMany(Wishlist::class);
-    }
-
+    
 }
