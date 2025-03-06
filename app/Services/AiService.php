@@ -11,7 +11,7 @@ class AiService
     {
         $this->client = new Client();
         $this->apiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=";
-        $this->apiKey = "AIzaSyD6p2rs_2kTpGrWYuM4sEXTcdt0_fu0HM0";
+        $this->apiKey = env('GEMINI_API_KEY');
     }
     public function getAdviceAi($expenses)
     {
